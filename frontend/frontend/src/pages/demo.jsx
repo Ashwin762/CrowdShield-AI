@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = "https://crowdshield-backend-l5aw.onrender.com";
+
 function Demo() {
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ const startAnalysis = async () => {
     formData.append("rtsp_url", rtsp);
   }
 
-  await fetch("http://127.0.0.1:8000/start", {
+  await fetch('${BASE_URL}/start', {
     method: "POST",
     body: formData,
   });
@@ -35,7 +37,7 @@ const startAnalysis = async () => {
 };
 
   const stopAnalysis = async () => {
-    await fetch("http://127.0.0.1:8000/stop", {
+    await fetch('${BASE_URL}/stop', {
       method: "POST",
     });
 
@@ -46,7 +48,7 @@ const startAnalysis = async () => {
     if (!streaming) return;
 
     const interval = setInterval(async () => {
-      const response = await fetch("http://127.0.0.1:8000/results");
+      const response = await fetch('${BASE_URL}/results');
       const data = await response.json();
       setResults(data);
     }, 1000);
@@ -58,7 +60,7 @@ const startAnalysis = async () => {
     <div className="min-h-screen bg-black text-white p-8 relative overflow-hidden">
 
       {/* Background Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-black opacity-40 blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-0br from-blue-900 via-purple-900 to-black opacity-40 blur-3xl"></div>
 
       {/* Back Button */}
       <button
@@ -186,7 +188,7 @@ const startAnalysis = async () => {
         {streaming && (
           <div className="mt-10">
             <img
-              src="http://127.0.0.1:8000/stream"
+              src='${BASE_URL}/stream'
               alt="Live Stream"
               className="w-full rounded-2xl shadow-2xl border border-white/10"
             />
